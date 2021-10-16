@@ -1,10 +1,10 @@
 package ti.apap.sielekthor.service;
 
-import ti.apap.sielekthor.model.PembelianModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ti.apap.sielekthor.repository.PembelianDb;
+import ti.apap.sielekthor.model.MemberModel;
+import ti.apap.sielekthor.model.TipeModel;
+import ti.apap.sielekthor.repository.TipeDb;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -12,13 +12,22 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class PembelianServiceImpl implements PembelianService {
+public class TipeServiceImpl implements TipeService {
     @Autowired
-    PembelianDb pembelianDb;
+    TipeDb tipeDb;
 
     @Override
-    public List<PembelianModel> getPembelianList() {
-        return pembelianDb.findAll();
+    public List<TipeModel> getTipeList() {
+        return tipeDb.findAll();
+    }
+
+    @Override
+    public TipeModel getTipeByIdTipe(Long idTipe) {
+        Optional<TipeModel> tipe = tipeDb.findByIdTipe(idTipe);
+        if(tipe.isPresent()){
+            return tipe.get();
+        }
+        return null;
     }
 
 //    @Override

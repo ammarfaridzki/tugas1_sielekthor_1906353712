@@ -4,7 +4,7 @@
 <head>
   <title> Sielekthor </title>
   <meta charset="UTF-8">
-  <title> Filter Pembelian</title>
+  <title> Cari Barang</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -12,23 +12,23 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar('Home')"></nav>
 <div class="justify-content-center font-weight-bold">
-       <h2>Form Tambah Barang</h2> <br>
+       <h2>Cari Barang</h2> <br>
 
-       <form th:action="@{/cari/pembelian}" method="GET">
+       <form th:action="@{/barang/cari}" method="GET">
 
-       Member <br>
-       <select name="member" class="form-control">
-            <option th:each="member : ${listMember}" th:value="${member.idMember}" th:text="${member.namaMember}"></option>
+       Tipe <br>
+       <select name="tipe" class="form-control">
+            <option th:each="tipe : ${listTipe}" th:value="${tipe.idTipe}" th:text="${tipe.namaTipe}"></option>
        </select>
        <br><br>
 
-       Pembayaran<br>
+       Stok<br>
        <label>
-            <input required type="radio" name="isCash" value="1"/> Tunai
+            <input required type="radio" name="stok" value="1"/> Available
        </label>
        <br>
        <label>
-            <input required type="radio" name="isCash" value="0"/> Cicil
+            <input required type="radio" name="stok" value="0"/> Sold Out
        </label>
 
        <button class="btn btn-primary" type="submit">Cari</button>
@@ -37,37 +37,37 @@
     </div>
   </div>
 
-  <div th:if="*{listPembelian.size() != 0}">
-  			<table class='table'>
-  				<thead class="bg-warning">
-  					<tr>
-  						<th>No</th>
-  						<th>No. Invoice</th>
-  						<th>Total Harga</th>
-  						<th>Member</th>
-  						<th>Jumlah Barang</th>
-  						<th>Tanggal Pembelian</th>
-  						<th></th>
-  						<th>Aksi</th>
-  					</tr>
-  				</thead>
-  				<tbody>
-  					<tr th:each="pembelian, iterationStatus : ${listPembelian}" th:style="${iterationStatus.even} ? 'font-weight-bold;'">
-  						<td th:text="${iterationStatus.count}"></td>
-  						<td th:text="${pembelian.noInvoice}"></td>
-  						<td th:text="${pembelian.total}"></td>
-  						<td th:text="${pembelian.member.namaMember}"></td>
-  						<td>BELOM</td>
-  						<td th:text="${pembelian.tanggalPembelian}"></td>
-  						<td> <a class="btn btn-primary" th:href="@{/pembelian/} + ${pembelian.idPembelian}">Lihat</a> </td>
-  						<td> <a class="btn btn-primary" th:href="@{/}">Hapus</a> </td>
-  					</tr>
-  				</tbody>
-  			</table>
-  		</div>
-              <div th:unless="*{listPembelian.size() != 0}">
-                  <h2 th:text="'Tidak ada pembelian'"></h2>
-              </div>
+		<div th:if="*{listBarang.size() != 0}">
+			<table class='table'>
+				<thead class="bg-warning">
+					<tr>
+						<th>No</th>
+						<th>Nama</th>
+						<th>Harga</th>
+						<th>Tipe</th>
+						<th>Stok</th>
+						<th></th>
+						<th>Aksi</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="barang, iterationStatus : ${listBarang}" th:style="${iterationStatus.even} ? 'font-weight-bold;'">
+						<td th:text="${iterationStatus.count}"></td>
+						<td th:text="${barang.namaBarang}"></td>
+						<td th:text="${barang.hargaBarang}"></td>
+						<td th:text="${barang.tipe.namaTipe}"></td>
+						<td th:text="${barang.stok}"></td>
+						<td> <a class="btn btn-primary" th:href="@{/barang/} + ${barang.idBarang}">Lihat</a> </td>
+						<td> <a class="btn btn-primary" th:href="@{/barang/ubah/} + ${barang.idBarang}">Update</a> </td>
+						<td> <a class="btn btn-primary" th:href="@{/}">Delete</a> </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+            <div th:unless="*{listBarang.size() != 0}">
+                <h2 th:text="'Tidak ada barang'"></h2>
+            </div>
 </div>
 </body>
 

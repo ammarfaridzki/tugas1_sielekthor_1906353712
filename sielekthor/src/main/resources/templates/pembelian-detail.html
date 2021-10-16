@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>Sielekthor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('Cabang')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+            <div class="card-body">
+                <h2>Detail Pembelian</h2>
+                <br>
+                <p th:text="'No Invoice         : ' + ${pembelian.noInvoice}"></p>
+                <p th:text="'Total Harga        : ' + ${pembelian.total}"></p>
+                <p th:text="'Member             : ' + ${pembelian.member.namaMember}"></p>
+                <p th:text="'Jumlah Barang      :  BELOM'"></p>
+                <p th:text="'Tanggal Pembelian  : ' + ${pembelian.tanggalPembelian}"></p>
+                <p th:if="${pembelian.isCash} == 1">Tunai</p>
+                <p th:if="${pembelian.isCash} == 0">Non-Tunai</p>
+                <a class="btn bg-danger" th:href="@{/pembelian/hapus/} + ${pembelian.idPembelian}">Delete</a>
+            </div>
+                <div class="col">
+
+                    <h3>Daftar Barang</h3>
+                    <div th:if="*{listPembelianBarang.size() != 0}">
+                            <table class = 'table'>
+                                <thead class="bg-warning">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Merk</th>
+                                    <th>Tipe</th>
+                                    <th>Tanggal Garansi</th>
+                                    <th>Harga</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="pembelianBarang, iterationStatus : ${listPembelianBarang}"
+                                    th:style="${iterationStatus.even} ? 'font-weight-bold;'">
+                                    <td th:text="${iterationStatus.count}"></td>
+                                    <td th:text="${pembelianBarang.barang.namaBarang}"></td>
+                                    <td th:text="${pembelianBarang.barang.merkBarang}"></td>
+                                    <td th:text="${pembelianBarang.barang.tipe.namaTipe}"></td>
+                                    <td th:text="${pembelianBarang.tanggalGaransi}"></td>
+                                    <td th:text="${pembelianBarang.barang.hargaBarang}"></td>
+                                    <td th:text="${pembelianBarang.quantity}"></td>
+                                    <td th:text="${pembelianBarang.barang.hargaBarang} * ${pembelianBarang.quantity}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                    <div th:unless="*{listPembelianBarang.size() != 0}">
+                        <h2 th:text="'Tidak ada barang yang dibeli'"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <a class="btn btn-primary" href="/pembelian/">Kembali</a>
+    </div>
+
+</div>
+
+</body>
+
+</html>

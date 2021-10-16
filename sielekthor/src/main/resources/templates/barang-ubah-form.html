@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
-	<title>Emsidi</title>
+	<title>Sielekthor</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
@@ -16,7 +16,8 @@
 				<div class="justify-content-center">
 					<h2>Form Ubah Barang</h2>
 					<br>
-					<form th:action="@{/pegawai/update}" th:object="${barang}" method="POST">
+					<form th:action="@{/barang/ubah}" th:object="${barang}" method="POST">
+						<input type="hidden" th:field="*{idBarang}" />
 						<input type="hidden" th:field="*{kodeBarang}" />
 						<input type="hidden" th:field="*{merkBarang}" />
 
@@ -45,7 +46,8 @@
                         <input class="form-control" type="text" name="hargaBarang" th:value="*{hargaBarang}" />
 						<br><br>
 
-						<button class="btn btn-primary" type="submit">Submit</button> <a class="btn btn-primary" href="/barang">Cancel</a> </form>
+						<button class="btn btn-primary" type="submit">Submit</button>
+						<a class="btn btn-primary" href="/barang">Cancel</a> </form>
 				</div>
 			</div>
 		</div>
