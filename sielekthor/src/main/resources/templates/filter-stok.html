@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <title> Sielekthor </title>
+  <meta charset="UTF-8">
+  <title> Filter Pembelian</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('Home')"></nav>
+<div class="justify-content-center font-weight-bold">
+       <h2>Form Tambah Barang</h2> <br>
+
+       <form th:action="@{/cari/pembelian}" method="GET">
+
+       Member <br>
+       <select name="member" class="form-control">
+            <option th:each="member : ${listMember}" th:value="${member.idMember}" th:text="${member.namaMember}"></option>
+       </select>
+       <br><br>
+
+       Pembayaran<br>
+       <label>
+            <input required type="radio" name="isCash" value="1"/> Tunai
+       </label>
+       <br>
+       <label>
+            <input required type="radio" name="isCash" value="0"/> Cicil
+       </label>
+
+       <button class="btn btn-primary" type="submit">Cari</button>
+       <a class="btn btn-primary" th:href="@{/barang}">Kembali</a>
+       </form>
+    </div>
+  </div>
+
+  <div th:if="*{listPembelian.size() != 0}">
+  			<table class='table'>
+  				<thead class="bg-warning">
+  					<tr>
+  						<th>No</th>
+  						<th>No. Invoice</th>
+  						<th>Total Harga</th>
+  						<th>Member</th>
+  						<th>Jumlah Barang</th>
+  						<th>Tanggal Pembelian</th>
+  						<th></th>
+  						<th>Aksi</th>
+  					</tr>
+  				</thead>
+  				<tbody>
+  					<tr th:each="pembelian, iterationStatus : ${listPembelian}" th:style="${iterationStatus.even} ? 'font-weight-bold;'">
+  						<td th:text="${iterationStatus.count}"></td>
+  						<td th:text="${pembelian.noInvoice}"></td>
+  						<td th:text="${pembelian.total}"></td>
+  						<td th:text="${pembelian.member.namaMember}"></td>
+  						<td>BELOM</td>
+  						<td th:text="${pembelian.tanggalPembelian}"></td>
+  						<td> <a class="btn btn-primary" th:href="@{/pembelian/} + ${pembelian.idPembelian}">Lihat</a> </td>
+  						<td> <a class="btn btn-primary" th:href="@{/}">Hapus</a> </td>
+  					</tr>
+  				</tbody>
+  			</table>
+  		</div>
+              <div th:unless="*{listPembelian.size() != 0}">
+                  <h2 th:text="'Tidak ada pembelian'"></h2>
+              </div>
+</div>
+</body>
+
+</html>
